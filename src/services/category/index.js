@@ -74,7 +74,7 @@ router
         },
       });
       if (rows > 0) {
-        res.send("ok");
+        res.send("Deleted");
       } else {
         res.status(404).send("not found");
       }
