@@ -1,9 +1,7 @@
 import express from "express";
 import db from "../../db/models/index.js";
-const Category = db.Category;
-const Product = db.Product;
 const User=db.User;
-const Comments=db.Comment;
+const Comment=db.Comment;
 import s from "sequelize";
 const { Op } = s;
 
@@ -13,21 +11,8 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const { name } = req.query;
-      const filter = req.query.name
-        ? {
-            where: {
-              name: {
-                [Op.iLike]: `%${name}%`,
-              },
-            },
-          }
-        : {};
-
-      console.log({ name: `%${name}` });
       const data = await User.findAll({
-        ...filter,
-        include: Comments,
+        include: Comment,
       });
       res.send(data);
     } catch (error) {
