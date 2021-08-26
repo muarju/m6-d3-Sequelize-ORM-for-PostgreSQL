@@ -1,6 +1,8 @@
 import express from "express";
 import db from "../../db/models/index.js";
 const Comment = db.Comment;
+const Product=db.Product;
+const User=db.User;
 import s from "sequelize";
 const { Op } = s;
 
@@ -17,15 +19,6 @@ router
       next(error);
     }
   })
-  .post(async (req, res, next) => {
-    try {
-      const data = await Comment.create(req.body);
-      res.send(data);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  });
 
 router
   .route("/:id")
@@ -67,5 +60,15 @@ router
       next(error);
     }
   });
-
+router
+  .route("/:id/:userId")
+  .post(async (req, res, next) => {
+    try {
+      const data = await Comment.create({...req.body,productId: req.params.id,userId: req.params.userId});
+      res.send(data);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  });
 export default router;
