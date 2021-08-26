@@ -12,7 +12,9 @@ router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const data = await Comment.findAll();
+      const data = await Comment.findAll({
+        include: User,
+      });
       res.send(data);
     } catch (error) {
       console.log(error);
@@ -24,7 +26,9 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const data = await Comment.findByPk(req.params.id);
+      const data = await Comment.findByPk(req.params.id,{
+        include: User,
+      });
       res.send(data);
     } catch (error) {
       console.log(error);
