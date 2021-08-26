@@ -3,6 +3,7 @@ import db from "../../db/models/index.js";
 const Category = db.Category;
 const Product = db.Product;
 const User=db.User;
+const Comments=db.Comment;
 import s from "sequelize";
 const { Op } = s;
 
@@ -26,7 +27,7 @@ router
       console.log({ name: `%${name}` });
       const data = await User.findAll({
         ...filter,
-        include: Product,
+        include: Comments,
       });
       res.send(data);
     } catch (error) {
@@ -36,7 +37,7 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const data = await Category.create(req.body);
+      const data = await User.create(req.body);
       res.send(data);
     } catch (error) {
       console.log(error);
@@ -48,8 +49,8 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const data = await Category.findByPk(req.params.id,{
-        include: Product,
+      const data = await User.findByPk(req.params.id,{
+        include: Comment,
       });
       res.send(data);
     } catch (error) {
@@ -59,7 +60,7 @@ router
   })
   .put(async (req, res, next) => {
     try {
-      const data = await Category.update(req.body, {
+      const data = await User.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
@@ -71,7 +72,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      const rows = await Category.destroy({
+      const rows = await User.destroy({
         where: {
           id: req.params.id,
         },
