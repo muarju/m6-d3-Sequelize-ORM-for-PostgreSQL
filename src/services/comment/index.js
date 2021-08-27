@@ -65,10 +65,10 @@ router
     }
   });
 router
-  .route("/:id/:userId")
+  .route("/:ProductId/:userId")
   .post(async (req, res, next) => {
     try {
-      const data = await Comment.create({...req.body,productId: req.params.id,userId: req.params.userId});
+      const data = await Comment.create({...req.body,productId: req.params.ProductId,userId: req.params.userId});
       res.send(data);
     } catch (error) {
       console.log(error);
